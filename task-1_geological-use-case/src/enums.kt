@@ -1,0 +1,28 @@
+enum class Color {
+    PURPLE,
+    BLUE,
+    RED,
+    WHITEYELLOW,
+    WHITEGREEN,
+    VARYING,
+    COLORLESS
+}
+
+enum class Luster {
+    VITEROUSGLASSY,
+    VITEROUSRESINOUS,
+    VITEROUSPEARLY,
+    ADAMINTINE,
+    VITEROUSPEARLYSILKY,
+    METALLIC,
+    PEARLYGREASY
+}
+
+enum class Fracture {
+    CONCHOIDAL,
+    SPLINTERY,
+    UNEVEN,
+    FIBROUS,
+    HACKLY,
+    SUBCONCHOIDAL,
+}

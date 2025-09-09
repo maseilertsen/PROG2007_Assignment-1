@@ -1,3 +1,4 @@
+
 /**
  * Prints the main menu (user options) for the user.
  */
@@ -31,5 +32,4 @@ fun main() {
             !in 1..5 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
     } while (opt != 0)
-
 }
