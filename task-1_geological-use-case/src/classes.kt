@@ -63,7 +63,8 @@ data class LocationMineral(
  * @see Hardness
  * @see Fracture
  */
-data class Mineral(val name: String,
+ data class Mineral(
+    val name: String,
     val luster: Luster,
     val color: Color,
     val hardness: Hardness,
@@ -72,8 +73,9 @@ data class Mineral(val name: String,
 
 /**
  * Range of hardness for a mineral
+ * If only one value is passed (no range) max will be null.
  */
 data class Hardness (
     val min: Double, // >= 1.0
-    val max: Double  // <= 10.0 && max >= min
+    val max: Double? = null  // <= 10.0 && max >= min
 )
