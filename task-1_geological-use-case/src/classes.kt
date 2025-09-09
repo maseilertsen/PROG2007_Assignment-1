@@ -3,6 +3,7 @@ import java.time.LocalTime
 
 /**
  * Data of a Geological Location
+ * @see GeoPoint
  */
 data class Location(
     val name: String,
@@ -13,7 +14,6 @@ data class Location(
 
 /**
  * Latitude and longitude of location
- * @see Location
  */
 data class GeoPoint(
     val latitude: Double,
@@ -22,6 +22,11 @@ data class GeoPoint(
 
 /**
  * Data of Assignments for geological company
+ * @see Employee
+ * @see Location
+ * @see DayOfWeek
+ * @see LocalTime
+ * @see LocalTime
  */
 data class Assignment(
     val employee: Employee,
@@ -43,6 +48,8 @@ data class Employee (
 
 /**
  * Location of a found mineral
+ * @see Location
+ * @see Mineral
  */
 data class LocationMineral(
     var location: Location, // can change if needed.
@@ -51,6 +58,10 @@ data class LocationMineral(
 
 /**
  * Mineral properties
+ * @see Luster
+ * @see Color
+ * @see Hardness
+ * @see Fracture
  */
 data class Mineral(val name: String,
     val luster: Luster,
