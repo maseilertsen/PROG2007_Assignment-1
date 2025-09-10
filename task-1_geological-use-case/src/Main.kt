@@ -26,7 +26,7 @@ fun main() {
             //1 -> displayGeologicalData()
             //2 -> locationAdmin() // add, update and delete.
             //3 -> mineralAdmin() // add, update and delete.
-            //4 -> listAllLocation()
+            4 -> listAllLocation()
             5 -> listAllMinerals() // ..and it's data!
             0 -> println("Shutting down...")
             !in 1..5 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.

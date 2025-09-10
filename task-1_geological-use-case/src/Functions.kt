@@ -1,5 +1,5 @@
 /**
- * Lists all minerals and its data
+ * Lists all minerals and its data.
  */
 fun listAllMinerals() {
     for (mineral in mockMineral) {

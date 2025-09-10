@@ -18,7 +18,12 @@ data class Location(
 data class GeoPoint(
     val latitude: Double,
     val longitude: Double
-)
+) {
+    init {
+        require(latitude in -90.0..90.0) { "Latitude must be between -90 and 90, was $latitude" }
+        require(longitude in -180.0..180.0) { "Longitude must be between -180 and 180, was $longitude" }
+    }
+}
 
 /**
  * Data of Assignments for geological company
@@ -76,6 +81,13 @@ data class LocationMineral(
  * If only one value is passed (no range) max will be null.
  */
 data class Hardness (
-    val min: Double, // >= 1.0
-    val max: Double? = null  // <= 10.0 && max >= min
-)
+    val min: Double,            // >= 1.0
+    val max: Double? = null     // <= 10.0 && max >= min
+){
+    init {
+        if (max != null) {
+            require(max >= min) { "Max hardness  must be greater than min: $min" }
+        }
+        require(min >= 0.0) { "Hardness must be at least $min" }
+    }
+}
