@@ -4,6 +4,7 @@ import java.time.LocalTime
 /**
  * Data of a Geological Location
  * @see GeoPoint
+ * TODO should notes (and descriptions) be restricted in length?
  */
 data class Location(
     val name: String,

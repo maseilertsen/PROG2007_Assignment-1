@@ -13,8 +13,8 @@ var mockMineral = listOf(
 
 var mockLocation = listOf(
     Location("Cairo", "A bit sandy",GeoPoint(30.0444, 31.2357)),   // Egypt
-    Location("Oslo", "Surrounded by fjords and forests", GeoPoint(59.9139, 10.7522)),   // Norway
+    Location("Oslo", "Surrounded by fjords and forests", GeoPoint(59.9139, 10.7522), "Does anyone really live here?"),   // Norway
     Location("Reykjavik", "Volcanic landscapes and hot springs", GeoPoint(64.1355, -21.8954)),  // Iceland),
     Location("Sydney", "Coastal city with sandstone geology", GeoPoint(-33.8688, 151.2093)), // Australia
-    Location("Santiago", "At the foothills of the Andes", GeoPoint(-33.4489, -70.6693)) // Chile
+    Location("Santiago", "At the foothills of the Andes", GeoPoint(-33.4489, -70.6693), "Shouldn't be chilly.") // Chile
 )

@@ -6,7 +6,7 @@ fun printMainMenu(){
    println("--- Main menu: ---\n" +
            "1 - Display geological location data and mineral data\n" +
            "2 - Location administration\n" +
-           "3 - Mineral administration" +
+           "3 - Mineral administration\n" +
            "4 - List all locations\n" +
            "5 - List all minerals\n" +
            "0 - Shut down application\n" +
