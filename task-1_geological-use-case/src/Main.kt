@@ -6,7 +6,7 @@ fun printMainMenu(){
    println("--- Main menu: ---\n" +
            "1 - Display geological location data and mineral data\n" +
            "2 - Location administration\n" +
-           "3 - Mineral administration" +
+           "3 - Mineral administration\n" +
            "4 - List all locations\n" +
            "5 - List all minerals\n" +
            "0 - Shut down application\n" +
@@ -26,7 +26,7 @@ fun main() {
             //1 -> displayGeologicalData()
             //2 -> locationAdmin() // add, update and delete.
             //3 -> mineralAdmin() // add, update and delete.
-            //4 -> listAllLocation()
+            4 -> listAllLocation()
             5 -> listAllMinerals() // ..and it's data!
             0 -> println("Shutting down...")
             !in 1..5 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
