@@ -34,22 +34,36 @@ data class GeoPoint(
  * @see LocalTime
  * @see LocalTime
  */
-data class Assignment(
-    val employee: Employee,
+data class Work(
+    val workingDays: DayOfWeek,
     val location: Location,
-    val dayOfWeek: DayOfWeek,
     val startTime: LocalTime,
     val endTime: LocalTime,
-    val hourlyWage: Double,
     )
 
 /**
  * Data of Employees
+ * TODO: could I if employeeId already exists with a require?
  */
 data class Employee (
     val employeeId: Int,
-    val name: String,
-    val phoneNumber: String
+    val name: Name,
+    val phoneNumber: String,
+    var hourlyWage: Double,
+    val work: MutableList<Work>
+){
+    init {
+        require(hourlyWage >= 0) { "Hourly Wage must be at least 0." }
+    }
+}
+
+/**
+ * Name of employee
+ * @see Employee
+ */
+data class Name(
+    val firstName: String,
+    val lastName: String
 )
 
 /**
