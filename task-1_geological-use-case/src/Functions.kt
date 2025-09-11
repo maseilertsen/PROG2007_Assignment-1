@@ -67,7 +67,7 @@ fun locationAdmin() {
                 // TODO: Implement functions
                 1 -> addLocation()
                 2 -> updateLocation()
-                3 -> deleteLocation()
+                3 -> deleteLocation(null)
                 0 -> println("System: Exiting Location administration...\n")
                 !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
             }
@@ -84,7 +84,7 @@ fun printLocationAdmin(){
     )
 }
 
-fun addLocation(){
+fun addLocation(replace: Boolean = false){
     println("\n--- Add Location Program ---")
 
     print("\tEnter new location:\n"+
@@ -104,6 +104,15 @@ fun addLocation(){
     )
         mockLocation.add(newLocation)
         println("\tAdded: $newLocation")
+
+        if (replace) {
+            val found = mockLocation.firstOrNull { it.name == name }
+            if (found != null) {
+                mockLocation.remove(found)
+                println("\tReplaced existing location named '$name'")
+            }
+        }
+        mockLocation.add(newLocation)
     } else {
         println("\tInvalid input, must be '<Name>,<Note>,<lat>,<long>'")
     }
@@ -114,29 +123,39 @@ fun addLocation(){
  * Deletes a location provided by user input (String)
  * @see listAllLocation
  */
-fun deleteLocation(){
-    println("\n--- Remove Location Program ---")
-    listAllLocation()
-    print("----------------- Name of location to be deleted: ")
-    val location = readln().trim()                                      // This and the next line
-    val found =  mockLocation.firstOrNull { it.name == location }     // could potentially become a function
+fun deleteLocation(replace: String?) {
+    if (replace == null) {
+        println("\n--- Remove Location Program ---")
 
-    if (found != null) {
-        print("Are you sure you want to delete this location?" +
-                "\n---$found.name\n" +
-                "\t${found.description}\n" +
-                "\tChoices (y/n): ")
-        val confirmation = readln().trim().uppercase()
-        if (confirmation == "Y"){
+        listAllLocation()
+        print("----------------- Name of location to be deleted: ")
+        val location = readln().trim()                                      // This and the next line
+        val found = mockLocation.firstOrNull { it.name == location }     // could potentially become a function
+
+        if (found != null) {
+            print(
+                "Are you sure you want to delete this location?" +
+                        "\n---$found.name\n" +
+                        "\t${found.description}\n" +
+                        "\tChoices (y/n): "
+            )
+            val confirmation = readln().trim().uppercase()
+            if (confirmation == "Y") {
+                mockLocation.remove(found)
+                println("\tRemoved: ${found.name}")
+            } else {
+                println("\tAborted deletion process")
+                println("\tSystem: Returning to main menu\n")
+                return
+            }
+        } else println("\tLocation not found check your spelling (Case sensitive!)\n")
+    } else {
+        val found = mockLocation.firstOrNull { it.name == replace }
+        if (found != null) {
             mockLocation.remove(found)
-            println("\tRemoved: ${found.name}")
-        } else {
-            println("\tAborted deletion process")
-            println("\tSystem: Returning to main menu\n")
-            return
         }
-    } else println("\tLocation not found check your spelling (Case sensitive!)\n") }
-
+    }
+}
 /**
  * Updates a locations properties based on user input
  */
@@ -159,6 +178,7 @@ fun updateLocation() {
                 "2 - description: ${found.description}\n" +
                 "3 - coordinates: ${found.coordinates.latitude}, ${found.coordinates.longitude}\n" +
                 "4 - notes: ${found.notes}\n" +
+                "5 - Replace all data\n" +
                 "0 - cancel\n"
     )
     print("Choose a valid option: ")
@@ -174,7 +194,7 @@ fun updateLocation() {
             return
         }
         1 -> {
-            print("New name (leave blank to keep '${found.name}'): ")
+            print("New name:  ")
             val input = readln()
             val updated = found.copy(name = input.trim())
             mockLocation[index] = updated
@@ -221,6 +241,19 @@ fun updateLocation() {
             mockLocation[index] = updated
             println("Updated notes.")
         }
+        5 ->{
+            addLocation(found)
+        }
         else -> println("!!! - Not a valid option!")
     }
+}
+
+/**
+ * Replaces all attributes of named location.
+ * @see deleteLocation
+ * @see addLocation
+ */
+fun addLocation(found: Location){
+    deleteLocation(found.name)
+    addLocation(true)
 }
