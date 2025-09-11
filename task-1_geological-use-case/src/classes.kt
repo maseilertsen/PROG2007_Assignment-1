@@ -67,13 +67,17 @@ data class Name(
 )
 
 /**
- * Location of a found mineral
+ * Location of a found mineral.
+ * All variables can be easily modified for ease of use.
  * @see Location
  * @see Mineral
  */
 data class LocationMineral(
-    var location: Location, // can change if needed.
-    var mineral: Mineral
+    var location: Location,
+    var mineral: Mineral,
+    var status: IdentidicationStatus,
+    var notes: String = "",
+    var observedAt: LocalTime? = null
 )
 
 /**
