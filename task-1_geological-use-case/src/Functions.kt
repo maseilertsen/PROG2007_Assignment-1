@@ -54,7 +54,7 @@ fun listAllLocation() {
  * @see deleteLocation
  */
 fun locationAdmin() {
-    var opt : Int? = null
+    var opt : Int?
     do {
         printLocationAdmin()
         print("Choose a valid option: ")
@@ -66,7 +66,7 @@ fun locationAdmin() {
             when (opt) {
                 // TODO: Implement functions
                 1 -> addLocation()
-                //2 -> updateLocation()
+                2 -> updateLocation()
                 3 -> deleteLocation()
                 0 -> println("System: Exiting Location administration...\n")
                 !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
@@ -110,17 +110,19 @@ fun addLocation(){
     return
 }
 
+/**
+ * Deletes a location provided by user input (String)
+ * @see listAllLocation
+ */
 fun deleteLocation(){
     println("\n--- Remove Location Program ---")
-    for (location in mockLocation) {
-        println("\tLocation: - ${location.name}")
-    }
-    print("----------------- Enter location to be deleted: ")
-    val location = readln().trim()
-    val found =  mockLocation.firstOrNull() { it.name == location }
+    listAllLocation()
+    print("----------------- Name of location to be deleted: ")
+    val location = readln().trim()                                      // This and the next line
+    val found =  mockLocation.firstOrNull { it.name == location }     // could potentially become a function
 
     if (found != null) {
-        println("Are you sure you want to delete this location?" +
+        print("Are you sure you want to delete this location?" +
                 "\n---$found.name\n" +
                 "\t${found.description}\n" +
                 "\tChoices (y/n): ")
@@ -133,5 +135,92 @@ fun deleteLocation(){
             println("\tSystem: Returning to main menu\n")
             return
         }
-    } else println("\tLocation not found check your spelling (Case sensitive!)\n")
+    } else println("\tLocation not found check your spelling (Case sensitive!)\n") }
+
+/**
+ * Updates a locations properties based on user input
+ */
+fun updateLocation() {
+    println("\n--- Update Location Program ---")
+    listAllLocation()
+    print("----------------- Name of location to be updated: ")
+    val targetName = readln().trim()
+
+    val index = mockLocation.indexOfFirst { it.name == targetName }
+    if (index == -1) {
+        println("\tLocation not found. Check your spelling (case sensitive!).\n")
+        return
+    }
+
+    val found = mockLocation[index]
+    println(
+        "\nWhich field do you want to update?\n" +
+                "1 - name: ${found.name}\n" +
+                "2 - description: ${found.description}\n" +
+                "3 - coordinates: ${found.coordinates.latitude}, ${found.coordinates.longitude}\n" +
+                "4 - notes: ${found.notes}\n" +
+                "0 - cancel\n"
+    )
+    print("Choose a valid option: ")
+    val opt = readln().toIntOrNull()
+    if (opt == null) {
+        println("!!! - Please enter an integer!")
+        return
+    }
+
+    when (opt) {
+        0 -> {
+            println("Update cancelled.")
+            return
+        }
+        1 -> {
+            print("New name (leave blank to keep '${found.name}'): ")
+            val input = readln()
+            val updated = found.copy(name = input.trim())
+            mockLocation[index] = updated
+            println("Updated name to '${updated.name}'.")
+        }
+        2 -> {
+            print("New description: ")
+            val input = readln()
+            val updated = found.copy(description = input.trim())
+            mockLocation[index] = updated
+            println("Updated description.")
+        }
+        3 -> {
+            println("Enter new coordinates as 'lat,long'")
+            print("-> ")
+            val line = readln().trim()
+            val parts = line.split(',')
+            if (parts.count {it == ","} >= 2){
+                println("!!! - Invalid format. Don't use commas in decimal. use '.'")
+                return
+            }
+            if (parts.size != 2) {
+                println("!!! - Invalid format. Use: 59.91,10.75")
+                return
+            }
+            val lat = parts[0].toDoubleOrNull()
+            val long = parts[1].toDoubleOrNull()
+            if (lat == null || long == null) {
+                println("!!! - Latitude/Longitude must be numbers.")
+                return
+            }
+            if (lat !in -90.0..90.0 || long !in -180.0..180.0) {
+                println("!!! - Latitude must be in [-90, 90], Longitude in [-180, 180].")
+                return
+            }
+            val updated = found.copy(coordinates = GeoPoint(lat, long))
+            mockLocation[index] = updated
+            println("Updated coordinates to ${lat}, ${long}.")
+        }
+        4 -> {
+            print("New notes: ")
+            val input = readln()
+            val updated = found.copy(notes = input.trim())
+            mockLocation[index] = updated
+            println("Updated notes.")
+        }
+        else -> println("!!! - Not a valid option!")
+    }
 }
