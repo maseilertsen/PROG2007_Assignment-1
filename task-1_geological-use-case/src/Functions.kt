@@ -67,7 +67,7 @@ fun locationAdmin() {
                 // TODO: Implement functions
                 1 -> addLocation()
                 //2 -> updateLocation()
-                //3 -> deleteLocation()
+                3 -> deleteLocation()
                 0 -> println("System: Exiting Location administration...\n")
                 !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
             }
@@ -85,7 +85,7 @@ fun printLocationAdmin(){
 }
 
 fun addLocation(){
-    println("\n--- Add Location Program---")
+    println("\n--- Add Location Program ---")
 
     print("\tEnter new location:\n"+
     "\t'<Name>,<Description>,<lat>,<long>'\n " +
@@ -108,4 +108,30 @@ fun addLocation(){
         println("\tInvalid input, must be '<Name>,<Note>,<lat>,<long>'")
     }
     return
+}
+
+fun deleteLocation(){
+    println("\n--- Remove Location Program ---")
+    for (location in mockLocation) {
+        println("\tLocation: - ${location.name}")
+    }
+    print("----------------- Enter location to be deleted: ")
+    val location = readln().trim()
+    val found =  mockLocation.firstOrNull() { it.name == location }
+
+    if (found != null) {
+        println("Are you sure you want to delete this location?" +
+                "\n---$found.name\n" +
+                "\t${found.description}\n" +
+                "\tChoices (y/n): ")
+        val confirmation = readln().trim().uppercase()
+        if (confirmation == "Y"){
+            mockLocation.remove(found)
+            println("\tRemoved: ${found.name}")
+        } else {
+            println("\tAborted deletion process")
+            println("\tSystem: Returning to main menu\n")
+            return
+        }
+    } else println("\tLocation not found check your spelling (Case sensitive!)\n")
 }
