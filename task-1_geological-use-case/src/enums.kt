@@ -29,5 +29,14 @@ enum class Fracture {
 
     // No need for custom names.
     val displayName: String
-        get() = name.lowercase().replaceFirstChar { it.uppercase() }
+    get() = name.lowercase().replaceFirstChar { it.uppercase() }
+}
+
+enum class IdentidicationStatus {
+    CERTAIN,
+    UNSURE,
+    UNDEFINED;
+
+    val displayName: String
+    get() = name.lowercase().replaceFirstChar { it.uppercase() }
 }
