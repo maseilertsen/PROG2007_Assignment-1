@@ -93,8 +93,8 @@ fun deleteLocation(replace: String?) {
 
         listAllLocation()
         print("----------------- Name of location to be deleted: ")
-        val location = readln().trim()                                      // This and the next line
-        val found = mockLocation.firstOrNull { it.name == location }     // could potentially become a function
+        val location = readln().trim()
+        val found = mockLocation.firstOrNull { it.name == location }
 
         if (found != null) {
             print(
@@ -122,6 +122,7 @@ fun deleteLocation(replace: String?) {
 }
 /**
  * Updates a locations properties based on user input
+ * @see listAllLocation
  */
 fun updateLocation() {
     println("\n--- Update Location Program ---")
@@ -214,6 +215,7 @@ fun updateLocation() {
 
 /**
  * Replaces all attributes of named location.
+ * Overloaded function.
  * @see deleteLocation
  * @see addLocation
  */

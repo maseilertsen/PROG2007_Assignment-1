@@ -1,6 +1,7 @@
 package functions
 import Hardness
 import Mineral
+import mockMineral
 
 
 /**
@@ -75,6 +76,27 @@ fun addMineral(){
 fun updateMineral(){
 //TODO
 }
+
+/**
+ * Deletes a mineral named by user input.
+ * @see listAllMinerals
+ */
 fun deleteMineral(opt : Int?) {
-//TODO
+    listAllMinerals()
+    print("----------------- Name of mineral to be deleted: ")
+    val input = readln().trim()
+    val found = mockMineral.firstOrNull() { it.name == input }
+
+    if (found != null) {
+        print("Are you sure you want to delete ${found.name}? (y/n): ")
+    } else {
+        println("\tno mineral with that name...check spelling (case sensitive)")
+        println("\tSystem: Returning to main menu\n")
+        return
+    }
+    val confirmation = readln().trim().uppercase()
+    if (confirmation == "y"){
+        mockMineral.remove(found)
+        println("Deleted mineral: ${found.name}")
+    }
 }
