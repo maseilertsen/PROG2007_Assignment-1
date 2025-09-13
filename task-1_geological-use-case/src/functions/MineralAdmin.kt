@@ -1,8 +1,6 @@
 package functions
-import GeoPoint
 import Hardness
 import Mineral
-import mockLocation
 import mockMineral
 
 
@@ -39,6 +37,7 @@ fun mineralAdmin() {
             1 -> addMineral()
             2 -> updateMineral()
             3 -> deleteMineral(null)
+            4 -> sortAlphabetically()
             0 -> println("System: Exiting Mineral administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -240,4 +239,17 @@ fun deleteMineral(replace: String?) {
 fun replaceMineral(found: Mineral){
     deleteMineral(found.name)
     addMineral(true)
+}
+
+/**
+ * Sorts a list alphabetically by name (first entry)
+ * This function does not "pretty-print" but displays all values raw.
+ * TODO: pretty print
+ */
+fun sortAlphabetically(){
+    val sortedList = mockMineral.sortedBy { it.name }
+    println("\nAlfabetically sorted by name:")
+
+    sortedList.forEach { print("\t$it\n")}
+    println()
 }
