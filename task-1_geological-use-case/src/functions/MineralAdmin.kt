@@ -2,6 +2,7 @@ package functions
 import Hardness
 import Mineral
 import mockMineral
+import kotlin.toString
 
 
 /**
@@ -12,6 +13,7 @@ fun printMineralAdmin(){
             "\t1 - Add mineral\n" +
             "\t2 - Update mineral\n" +
             "\t3 - Delete mineral\n" +
+            "\t4 - Sort mineral\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -37,7 +39,7 @@ fun mineralAdmin() {
             1 -> addMineral()
             2 -> updateMineral()
             3 -> deleteMineral(null)
-            4 -> sortAlphabetically()
+            4 -> sortMineral()
             0 -> println("System: Exiting Mineral administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -242,14 +244,32 @@ fun replaceMineral(found: Mineral){
 }
 
 /**
- * Sorts a list alphabetically by name (first entry)
- * This function does not "pretty-print" but displays all values raw.
+ * Sorts a list naturally
  * TODO: pretty print
  */
-fun sortAlphabetically(){
-    val sortedList = mockMineral.sortedBy { it.name }
-    println("\nAlfabetically sorted by name:")
+fun <T: Comparable<T>> sortAlphabetically(selector: (Mineral) -> T?){
+    val sortedList = mockMineral.sortedBy(selector)
+    println("\nSorted list:")
 
     sortedList.forEach { print("\t$it\n")}
     println()
+}
+
+/**
+ * Reads input from user and sorts list accordingly
+ * @see sortAlphabetically
+ */
+fun sortMineral(){
+    println("What property do you want to sort by?")
+    print("name, luster, color, hardness, fracture: ")
+
+    val choice = readln().trim()
+    when (choice) {
+        "name" -> sortAlphabetically {it.name}
+        "luster" -> sortAlphabetically {it.luster.displayName}
+        "color" -> sortAlphabetically {it.color.displayName}
+        "hardness" -> sortAlphabetically {it.hardness.min}
+        "fracture" -> sortAlphabetically {it.fracture.displayName}
+        else -> println("Invalid choice!")
+    }
 }
