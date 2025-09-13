@@ -2,6 +2,7 @@ import functions.listAllLocation
 import functions.listAllMinerals
 import functions.locationAdmin
 import functions.printMainMenu
+import functions.mineralAdmin
 
 
 /**
@@ -17,7 +18,7 @@ fun main() {
             // TODO: Implement functions
             //1 -> displayGeologicalData()
             2 -> locationAdmin() // add, update and delete.
-            //3 -> mineralAdmin() // add, update and delete.
+            3 -> mineralAdmin() // add, update and delete.
             4 -> listAllLocation()
             5 -> listAllMinerals() // ..and it's data!
             0 -> println("System: Shutting down...")
