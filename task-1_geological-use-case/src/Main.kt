@@ -1,8 +1,12 @@
+import functions.listAllLocation
+import functions.listAllMinerals
+import functions.locationAdmin
+import functions.printMainMenu
 
 
 /**
  * Reads user input, and calls functions to perform program function.
- * @see printMainMenu
+ * @see functions.printMainMenu
  */
 fun main() {
     do {
