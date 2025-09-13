@@ -13,6 +13,7 @@ fun printMainMenu(){
             "3 - Mineral administration\n" +
             "4 - List all locations\n" +
             "5 - List all minerals\n" +
+            "6 - Employee administration\n" +
             "0 - Shut down application\n" +
             "-------------------------\n")
 }

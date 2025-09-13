@@ -6,13 +6,14 @@ import mockEmployee
 /**
  * Displays MineralAdmin-menu options.
  */
-fun printEmpoyeeAdmin(){
+fun printEmployeeAdmin(){
     println("--Employee Administration ---\n" +
             //"\t1 - Add mineral\n" +
             //"\t2 - Update mineral\n" +
             //"\t3 - Delete mineral\n" +
             "\t4 - Sort employees\n" +
-            "\t5 - list all Employees\n" +
+            "\t5 - list all employees\n" +
+            "\t6 - list one employee\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -22,7 +23,7 @@ fun printEmpoyeeAdmin(){
 fun employeeAdmin() {
     var opt : Int?
     do {
-        printEmpoyeeAdmin()
+        printEmployeeAdmin()
         print("Choose a valid option: ")
         opt = readln().toIntOrNull()
         if (opt == null) {
@@ -32,6 +33,7 @@ fun employeeAdmin() {
         when (opt) {
             4 -> sortMineral()
             5 -> listAllEmployees()
+            6 -> findEmployee()
             0 -> println("System: Exiting Employee administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -63,3 +65,25 @@ fun listAllEmployees() {
         printEmployee(employee)
     }
 }
+
+/**
+ * Search for employee in database (list)
+ * @see Employee
+ * @return Instance of Employee or null
+ */
+fun findEmployee(): Employee? {
+    println("\nSearch for an employee (first name): ")
+    print("->")
+    val name = readln().trim()
+
+    val found = mockEmployee.firstOrNull{it.name.firstName == name}
+    if (found != null) {
+        println("Found Employee: ${found.name.firstName} ${found.name.lastName}")
+        return found
+     } else {
+         println("Employee not found")
+     }
+   return null
+}
+
+
