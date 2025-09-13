@@ -1,49 +1,19 @@
-/**
- * Prints the main menu (user options) for the user.
- */
-fun printMainMenu(){
-    println("--- Main menu: ---\n" +
-            "1 - Display geological location data and mineral data\n" +
-            "2 - Location administration\n" +
-            "3 - Mineral administration\n" +
-            "4 - List all locations\n" +
-            "5 - List all minerals\n" +
-            "0 - Shut down application\n" +
-            "-------------------------\n")
-}
-/**
- * Lists all minerals and its data.
- */
-fun listAllMinerals() {
-    for (mineral in mockMineral) {
-        // Check if max value is null
-        var hardnessValue = "from ${mineral.hardness.min} to ${mineral.hardness.max}"
-        if (mineral.hardness.max == null){ // Can be null when only one value is provided.
-           hardnessValue = mineral.hardness.min.toString()
-        }
+package functions
 
-        println("--- Mineral: ${mineral.name} ---\n" +
-                "\tLuster:".padEnd(13)      + "${mineral.luster.displayName}\n"   +
-                "\tColor:".padEnd(13)       + "${mineral.color.displayName}\n"    +
-                "\tHardness:".padEnd(13)    + hardnessValue + "\n"                +
-                "\tFracture:".padEnd(13)    + "${mineral.fracture.displayName}\n")
-    }
-}
+import GeoPoint
+import Location
+import mockLocation
 
 /**
- * Lists all locations and their data.
+ * Displays LocationAdmin-menu options.
  */
-fun listAllLocation() {
-    for (location in mockLocation) {
-        print("--- Location: ${location.name} ---\n" +
-        "\tDescription:".padEnd(15) + "${location.description}\n" +
-        "\tCoordinates:".padEnd(15) +   "(${location.coordinates.latitude}," + "${location.coordinates.longitude})\n")
-
-        if (location.notes != ""){ // Only print notes if they exist.
-            print("\tNotes".padEnd(15) + "${location.notes}\n")
-        }
-        print('\n')
-    }
+fun printLocationAdmin(){
+    println("--- Location Administration ---\n" +
+            "\t1 - Add location\n" +
+            "\t2 - Update location\n" +
+            "\t3 - Delete location\n" +
+            "\t0 - Return to main menu\n"
+    )
 }
 
 /**
@@ -58,38 +28,34 @@ fun locationAdmin() {
     do {
         printLocationAdmin()
         print("Choose a valid option: ")
-         opt = readln().toIntOrNull()
+        opt = readln().toIntOrNull()
         if (opt == null) {
             println("\t!!! - Please enter an integer!\n" + "\tSystem: Returning to Location Administration menu\n")
             continue
         }
-            when (opt) {
-                // TODO: Implement functions
-                1 -> addLocation()
-                2 -> updateLocation()
-                3 -> deleteLocation(null)
-                0 -> println("System: Exiting Location administration...\n")
-                !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
-            }
+        when (opt) {
+            // TODO: Implement functions
+            1 -> addLocation()
+            2 -> updateLocation()
+            3 -> deleteLocation(null)
+            0 -> println("System: Exiting Location administration...\n")
+            !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
+        }
 
     } while (opt != 0)
 }
 
-fun printLocationAdmin(){
-    println("--- Location Administration ---\n" +
-            "\t1 - Add location\n" +
-            "\t2 - Update location\n" +
-            "\t3 - Delete location\n" +
-            "\t0 - Return to main menu\n"
-    )
-}
-
-fun addLocation(replace: Boolean = false){
+/**
+ * Adds a location from user input.
+ */
+fun addLocation(replace: Boolean = false) {
     println("\n--- Add Location Program ---")
 
-    print("\tEnter new location:\n"+
-    "\t'<Name>,<Description>,<lat>,<long>'\n " +
-    "\t->")
+    print(
+        "\tEnter new location:\n" +
+                "\t'<Name>,<Description>,<lat>,<long>'\n " +
+                "\t->"
+    )
     val newLocationString = readln()
     val newLocationParts = newLocationString.split(',')
 
@@ -100,23 +66,17 @@ fun addLocation(replace: Boolean = false){
         val lat = newLocationParts[2].trim().toDouble()
         val long = newLocationParts[3].trim().toDouble()
 
-        val newLocation = Location(name,note,GeoPoint(lat, long)
-    )
-        mockLocation.add(newLocation)
-        println("\tAdded: $newLocation")
+        val newLocation = Location(name, note, GeoPoint(lat, long))
 
-        if (replace) {
-            val found = mockLocation.firstOrNull { it.name == name }
-            if (found != null) {
-                mockLocation.remove(found)
-                println("\tReplaced existing location named '$name'")
-            }
-        }
         mockLocation.add(newLocation)
-    } else {
+
+        if (replace)
+            println("\tReplaced existing location named '$name'")
+        else
+            println("\tAdded: $newLocation")
+    } else
         println("\tInvalid input, must be '<Name>,<Note>,<lat>,<long>'")
-    }
-    return
+
 }
 
 /**
@@ -129,8 +89,8 @@ fun deleteLocation(replace: String?) {
 
         listAllLocation()
         print("----------------- Name of location to be deleted: ")
-        val location = readln().trim()                                      // This and the next line
-        val found = mockLocation.firstOrNull { it.name == location }     // could potentially become a function
+        val location = readln().trim()
+        val found = mockLocation.firstOrNull { it.name == location }
 
         if (found != null) {
             print(
@@ -158,6 +118,7 @@ fun deleteLocation(replace: String?) {
 }
 /**
  * Updates a locations properties based on user input
+ * @see listAllLocation
  */
 fun updateLocation() {
     println("\n--- Update Location Program ---")
@@ -198,14 +159,14 @@ fun updateLocation() {
             val input = readln()
             val updated = found.copy(name = input.trim())
             mockLocation[index] = updated
-            println("Updated name to '${updated.name}'.")
+            println("-- Updated name to '${updated.name}'.")
         }
         2 -> {
             print("New description: ")
             val input = readln()
             val updated = found.copy(description = input.trim())
             mockLocation[index] = updated
-            println("Updated description.")
+            println("--Updated description.")
         }
         3 -> {
             println("Enter new coordinates as 'lat,long'")
@@ -250,6 +211,7 @@ fun updateLocation() {
 
 /**
  * Replaces all attributes of named location.
+ * Overloaded function.
  * @see deleteLocation
  * @see addLocation
  */

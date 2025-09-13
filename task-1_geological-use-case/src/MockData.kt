@@ -1,4 +1,4 @@
-var mockMineral = listOf(
+var mockMineral = mutableListOf(
     Mineral("Amethyst", Luster.VITREOUSGLASSY, Color.PURPLE, Hardness(7.0), Fracture.CONCHOIDAL),
     Mineral("Garnet", Luster.VITREOUSRESINOUS, Color.VARYING, Hardness(6.5, 7.5), Fracture.CONCHOIDAL),
     Mineral("Kyanite", Luster.VITREOUSPEARLY, Color.BLUE, Hardness(5.0, 7.0), Fracture.SPLINTERY),
