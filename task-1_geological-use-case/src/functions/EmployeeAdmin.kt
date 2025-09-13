@@ -1,6 +1,7 @@
 package functions
 
 import Employee
+import functions.findEmployee
 import mockEmployee
 import kotlin.time.Duration
 import java.time.DayOfWeek
@@ -17,6 +18,7 @@ fun printEmployeeAdmin(){
             "\t5 - list all employees\n" +
             "\t6 - list one employee\n" +
             "\t7 - Employee monthly paycheck\n" +
+            "\t8 - All monthly paychecks\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -37,7 +39,8 @@ fun employeeAdmin() {
             4 -> sortMineral()
             5 -> listAllEmployees()
             6 -> printOneEmployee()
-            7 -> monthlyPaycheck()
+            7 -> monthlyPaycheck(null)
+            8 -> allMonthlyPaycheck()
             0 -> println("System: Exiting Employee administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -78,14 +81,18 @@ fun listAllEmployees() {
  * TODO implement modular function to search for different parameter like:
  * TODO @see sortAlphabetically
  */
-fun findEmployee(): Employee? {
-    println("\nSearch for an employee (first name): ")
-    print("->")
-    val name = readln().trim()
+fun findEmployee(name: String?): Employee? {
+    var name = name
+    if (name == null) {
+        println("\nSearch for an employee (first name): ")
+        print("->")
+
+        name = readln().trim()
+    }
 
     val found = mockEmployee.firstOrNull{it.name.firstName == name}
     if (found != null) {
-        println("Found Employee: ${found.name.firstName} ${found.name.lastName}")
+        //println("Found Employee: ${found.name.firstName} ${found.name.lastName}") // TODO remove debug print
         return found
      } else {
          println("Employee not found")
@@ -99,7 +106,7 @@ fun findEmployee(): Employee? {
  * @see printEmployee
  */
 fun printOneEmployee() {
-    val employee = findEmployee()
+    val employee = findEmployee(null)
     if (employee != null) {
         printEmployee(employee)
     } else{
@@ -111,10 +118,10 @@ fun printOneEmployee() {
  * Calculate and display monthly paycheck of an employee
  * Assumption: There are 4 weeks of work in a month
  */
-fun monthlyPaycheck() {
-    val employee = findEmployee()
-    if (employee != null) {
+fun monthlyPaycheck(employee: Employee?) {
+    val employee = findEmployee(employee?.name?.firstName)
 
+    if (employee != null) {
         val payByHour = employee.hourlyWage
         var workTime= 0
         for (work in employee.work) {
@@ -126,7 +133,17 @@ fun monthlyPaycheck() {
         }
 
         val totalPay = workTime * payByHour * 4 // assumption of 4 weeks of work in a month
-        println("Monthly pay for ${employee.name.firstName} ${employee.name.lastName}: $totalPay\n")
+        println("Monthly pay for ${employee.name.firstName} ${employee.name.lastName}: $totalPay")
     }
 }
 
+/**
+ * Shows monthly paychecks for all employees
+ * @see monthlyPaycheck
+ */
+fun allMonthlyPaycheck() {
+   for (employee in mockEmployee){
+       monthlyPaycheck(employee)
+   }
+    println()
+}
