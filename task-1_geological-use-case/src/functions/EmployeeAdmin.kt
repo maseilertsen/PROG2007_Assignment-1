@@ -33,7 +33,7 @@ fun employeeAdmin() {
         when (opt) {
             4 -> sortMineral()
             5 -> listAllEmployees()
-            6 -> findEmployee()
+            6 -> printOneEmployee()
             0 -> println("System: Exiting Employee administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -82,8 +82,20 @@ fun findEmployee(): Employee? {
         return found
      } else {
          println("Employee not found")
+        return null
      }
-   return null
 }
 
-
+/**
+ * Prints one specific employee and their info
+ * @see findEmployee
+ * @see printEmployee
+ */
+fun printOneEmployee() {
+    val employee = findEmployee()
+    if (employee != null) {
+        printEmployee(employee)
+    } else{
+        println("Could not print ghost..")
+    }
+}
