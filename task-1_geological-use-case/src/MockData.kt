@@ -64,9 +64,11 @@ val mockEmployee = mutableListOf(
         employeeId = 5,
         name = Name("Emma", "Johansen"),
         phoneNumber = "99887766",
-        hourlyWage = 280.0,
+        hourlyWage = 100.0,
         work = mutableListOf(
-            Work(DayOfWeek.FRIDAY, Location("Lillehammer", "Winter sports city", GeoPoint(61.12, 10.47)), LocalTime.of(9, 0), LocalTime.of(17, 0))
+            Work(DayOfWeek.FRIDAY, Location("Lillehammer", "Winter sports city", GeoPoint(61.12, 10.47)), LocalTime.of(9, 0), LocalTime.of(17, 0)),
+            Work(DayOfWeek.TUESDAY, Location("Lillehammer", "Winter sports city", GeoPoint(61.12, 10.47)), LocalTime.of(9, 0), LocalTime.of(17, 0)),
+            Work(DayOfWeek.MONDAY, Location("Lillehammer", "Winter sports city", GeoPoint(61.12, 10.47)), LocalTime.of(9, 0), LocalTime.of(17, 0))
         )
     )
 )

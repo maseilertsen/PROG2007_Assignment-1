@@ -2,6 +2,8 @@ package functions
 
 import Employee
 import mockEmployee
+import kotlin.time.Duration
+import java.time.DayOfWeek
 
 /**
  * Displays MineralAdmin-menu options.
@@ -14,6 +16,7 @@ fun printEmployeeAdmin(){
             "\t4 - Sort employees\n" +
             "\t5 - list all employees\n" +
             "\t6 - list one employee\n" +
+            "\t7 - Employee monthly paycheck\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -34,6 +37,7 @@ fun employeeAdmin() {
             4 -> sortMineral()
             5 -> listAllEmployees()
             6 -> printOneEmployee()
+            7 -> monthlyPaycheck()
             0 -> println("System: Exiting Employee administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -67,9 +71,12 @@ fun listAllEmployees() {
 }
 
 /**
- * Search for employee in database (list)
+ * Search for employee by first name in database (list)
  * @see Employee
  * @return Instance of Employee or null
+ *
+ * TODO implement modular function to search for different parameter like:
+ * TODO @see sortAlphabetically
  */
 fun findEmployee(): Employee? {
     println("\nSearch for an employee (first name): ")
@@ -99,3 +106,27 @@ fun printOneEmployee() {
         println("Could not print ghost..")
     }
 }
+
+/**
+ * Calculate and display monthly paycheck of an employee
+ * Assumption: There are 4 weeks of work in a month
+ */
+fun monthlyPaycheck() {
+    val employee = findEmployee()
+    if (employee != null) {
+
+        val payByHour = employee.hourlyWage
+        var workTime= 0
+        for (work in employee.work) {
+            var dayTime = 0
+            val hour = work.endTime.hour - work.startTime.hour
+            val minute = (work.startTime.minute - work.startTime.minute) / 60 // converting to hour.
+            dayTime = hour + minute
+            workTime += dayTime
+        }
+
+        val totalPay = workTime * payByHour * 4 // assumption of 4 weeks of work in a month
+        println("Monthly pay for ${employee.name.firstName} ${employee.name.lastName}: $totalPay\n")
+    }
+}
+
