@@ -45,6 +45,9 @@ fun locationAdmin() {
     } while (opt != 0)
 }
 
+/**
+ * Adds a location from user input.
+ */
 fun addLocation(replace: Boolean = false){
     println("\n--- Add Location Program ---")
 
