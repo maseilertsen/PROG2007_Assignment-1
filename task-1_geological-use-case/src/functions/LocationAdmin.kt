@@ -48,12 +48,14 @@ fun locationAdmin() {
 /**
  * Adds a location from user input.
  */
-fun addLocation(replace: Boolean = false){
+fun addLocation(replace: Boolean = false) {
     println("\n--- Add Location Program ---")
 
-    print("\tEnter new location:\n"+
-            "\t'<Name>,<Description>,<lat>,<long>'\n " +
-            "\t->")
+    print(
+        "\tEnter new location:\n" +
+                "\t'<Name>,<Description>,<lat>,<long>'\n " +
+                "\t->"
+    )
     val newLocationString = readln()
     val newLocationParts = newLocationString.split(',')
 
@@ -64,23 +66,17 @@ fun addLocation(replace: Boolean = false){
         val lat = newLocationParts[2].trim().toDouble()
         val long = newLocationParts[3].trim().toDouble()
 
-        val newLocation = Location(name,note, GeoPoint(lat, long)
-        )
-        mockLocation.add(newLocation)
-        println("\tAdded: $newLocation")
+        val newLocation = Location(name, note, GeoPoint(lat, long))
 
-        if (replace) {
-            val found = mockLocation.firstOrNull { it.name == name }
-            if (found != null) {
-                mockLocation.remove(found)
-                println("\tReplaced existing location named '$name'")
-            }
-        }
         mockLocation.add(newLocation)
-    } else {
+
+        if (replace)
+            println("\tReplaced existing location named '$name'")
+        else
+            println("\tAdded: $newLocation")
+    } else
         println("\tInvalid input, must be '<Name>,<Note>,<lat>,<long>'")
-    }
-    return
+
 }
 
 /**
@@ -163,14 +159,14 @@ fun updateLocation() {
             val input = readln()
             val updated = found.copy(name = input.trim())
             mockLocation[index] = updated
-            println("Updated name to '${updated.name}'.")
+            println("-- Updated name to '${updated.name}'.")
         }
         2 -> {
             print("New description: ")
             val input = readln()
             val updated = found.copy(description = input.trim())
             mockLocation[index] = updated
-            println("Updated description.")
+            println("--Updated description.")
         }
         3 -> {
             println("Enter new coordinates as 'lat,long'")
