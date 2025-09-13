@@ -19,6 +19,7 @@ fun printEmployeeAdmin(){
             "\t6 - list one employee\n" +
             "\t7 - Employee monthly paycheck\n" +
             "\t8 - All monthly paychecks\n" +
+            "\t9 - sort employees\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -38,9 +39,10 @@ fun employeeAdmin() {
         when (opt) {
             4 -> sortMineral()
             5 -> listAllEmployees()
-            6 -> printOneEmployee()
+            6 -> printOneEmployee(null)
             7 -> monthlyPaycheck(null)
             8 -> allMonthlyPaycheck()
+            9 -> sortEmployees()
             0 -> println("System: Exiting Employee administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -75,6 +77,7 @@ fun listAllEmployees() {
 
 /**
  * Search for employee by first name in database (list)
+ * @param name pass a name to the function
  * @see Employee
  * @return Instance of Employee or null
  *
@@ -105,8 +108,8 @@ fun findEmployee(name: String?): Employee? {
  * @see findEmployee
  * @see printEmployee
  */
-fun printOneEmployee() {
-    val employee = findEmployee(null)
+fun printOneEmployee(employee: String?) {
+    val employee = findEmployee(employee)
     if (employee != null) {
         printEmployee(employee)
     } else{
@@ -146,4 +149,13 @@ fun allMonthlyPaycheck() {
        monthlyPaycheck(employee)
    }
     println()
+}
+
+/**
+ * Sorts employees by their last name
+ */
+fun sortEmployees() {
+    val sortedList= mockEmployee.sortedBy{it.name.lastName}
+    println("\nSorted employees:")
+    sortedList.forEach{printOneEmployee(it.name.firstName)}
 }
