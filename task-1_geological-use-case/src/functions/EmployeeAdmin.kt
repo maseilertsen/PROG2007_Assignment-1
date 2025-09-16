@@ -53,15 +53,21 @@ fun employeeAdmin() {
  * Lists a (1) employee and their data.
  */
 fun printEmployee(employee: Employee) {
-    println("ID-" + employee.employeeId + " -- name: " + employee.name.firstName+ " " + employee.name.lastName)
-    println("\tPhone number: " + employee.phoneNumber)
-    println("\tHourly wage" + employee.hourlyWage)
-    println("\tCurrent work: ")
+    println("ID-${employee.employeeId} -- name: ${employee.name.firstName} ${employee.name.lastName}")
+    println("\tPhone number: ${employee.phoneNumber}")
+    println("\tHourly wage: ${employee.hourlyWage}")
 
+    println("\tCurrent work:")
     for (work in employee.work) { // all work information
         println("\t\tDay: ${work.workingDays}")
-        println("\t\tLocation: ${work.location.name} - ${work.location.description}")
+
+        val loc = work.location
+        if (loc != null) {
+            println("\t\tLocation: ${loc.name} - ${loc.description}")
+        } else
+            println("\t\tLocation: <No location assigned>")
         println("\t\tHours: ${work.startTime} - ${work.endTime}")
+        println()
     }
     println()
 }
