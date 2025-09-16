@@ -12,6 +12,7 @@ fun printLocationAdmin(){
             "\t1 - Add location\n" +
             "\t2 - Update location\n" +
             "\t3 - Delete location\n" +
+            "\t4 - List all locations\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -38,6 +39,7 @@ fun locationAdmin() {
             1 -> addLocation()
             2 -> updateLocation()
             3 -> deleteLocation(null)
+            4 -> listAllLocation()
             0 -> println("System: Exiting Location administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }

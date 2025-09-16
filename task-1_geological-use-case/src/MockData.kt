@@ -1,4 +1,6 @@
+import functions.findEmployee
 import functions.findLocation
+import functions.findMineral
 import java.time.DayOfWeek
 import java.time.LocalTime
 
@@ -67,10 +69,30 @@ val mockEmployee = mutableListOf(
         name = Name("Emma", "Johansen"),
         phoneNumber = "99887766",
         hourlyWage = 100.0,
-        work = mutableListOf(
+        work = mutableListOf( // switch to sets
             Work(DayOfWeek.FRIDAY, findLocation("Lillehammer"), LocalTime.of(9, 0), LocalTime.of(17, 0)),
             Work(DayOfWeek.TUESDAY, findLocation("Bergen"), LocalTime.of(9, 0), LocalTime.of(17, 0)),
             Work(DayOfWeek.MONDAY, findLocation("Oslo"), LocalTime.of(9, 0), LocalTime.of(17, 0))
         )
     )
+)
+
+// List of findings og location and Mineral
+var mockFinds = mutableListOf(
+    Finds(
+        location = findLocation("Oslo"),
+        mineral = findMineral("Aragonite"),
+        status = IdentificationStatus.UNDEFINED,
+        notes = "Its a rock!",
+        observedAt = null,
+        observedBy = findEmployee("Alice")
+    ),
+    Finds(
+        location = findLocation("Sidney"),
+        mineral = findMineral("Diamond"),
+        status = IdentificationStatus.UNDEFINED,
+        notes = "Its another rock!",
+        observedAt = null,
+        observedBy = findEmployee("Alice")
+)
 )

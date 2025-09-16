@@ -72,13 +72,16 @@ data class Name(
  * All variables can be easily modified for ease of use.
  * @see Location
  * @see Mineral
+ * @see IdentificationStatus
+ * @see Employee
  */
-data class LocationMineral(
-    var location: Location,
-    var mineral: Mineral,
-    var status: IdentidicationStatus,
+data class Finds(
+    var location: Location?,
+    var mineral: Mineral?,
+    var status: IdentificationStatus? = IdentificationStatus.UNDEFINED,
     var notes: String = "",
-    var observedAt: LocalTime? = null
+    var observedAt: LocalTime? = null,
+    var observedBy: Employee? = null
 )
 
 /**

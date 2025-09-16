@@ -1,4 +1,5 @@
 import functions.employeeAdmin
+import functions.findsMenu
 import functions.listAllLocation
 import functions.listAllMinerals
 import functions.locationAdmin
@@ -17,12 +18,10 @@ fun main() {
         val opt = readln().toIntOrNull() ?: println("\t!!! - Please enter an integer!")
         when (opt) {
             // TODO: Implement functions
-            //1 -> displayGeologicalData()
+            1 -> findsMenu()
             2 -> locationAdmin() // add, update and delete.
             3 -> mineralAdmin() // add, update and delete.
-            4 -> listAllLocation()
-            5 -> listAllMinerals() // ..and it's data!
-            6 -> employeeAdmin()
+            4 -> employeeAdmin()
             0 -> println("System: Shutting down...")
             !in 1..5 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }

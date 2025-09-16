@@ -1,6 +1,7 @@
 package functions
 import Hardness
 import Mineral
+import mockLocation
 import mockMineral
 import kotlin.toString
 
@@ -13,7 +14,8 @@ fun printMineralAdmin(){
             "\t1 - Add mineral\n" +
             "\t2 - Update mineral\n" +
             "\t3 - Delete mineral\n" +
-            "\t4 - Sort mineral\n" +
+            "\t4 - List all minerals\n" +
+            "\t5 - Sort mineral\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -39,7 +41,8 @@ fun mineralAdmin() {
             1 -> addMineral()
             2 -> updateMineral()
             3 -> deleteMineral(null)
-            4 -> sortMineral()
+            4 -> listAllMinerals()
+            5 -> sortMineral()
             0 -> println("System: Exiting Mineral administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -271,5 +274,23 @@ fun sortMineral(){
         "hardness" -> sortAlphabetically {it.hardness.min}
         "fracture" -> sortAlphabetically {it.fracture.displayName}
         else -> println("Invalid choice!")
+    }
+}
+
+fun findMineral(name: String?): Mineral? {
+    var name = name
+    if (name == null) {
+        println("\nSearch for a Mineral (name): ")
+        print("->")
+        name = readln().trim()
+    }
+
+    val found = mockMineral.firstOrNull { it.name == name }
+    if (found != null) {
+        //println(found) // TODO remove debug print
+        return found
+    } else {
+        // println("Location not found.")
+        return null
     }
 }

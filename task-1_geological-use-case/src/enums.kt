@@ -32,7 +32,7 @@ enum class Fracture {
     get() = name.lowercase().replaceFirstChar { it.uppercase() }
 }
 
-enum class IdentidicationStatus {
+enum class IdentificationStatus {
     CERTAIN,
     UNSURE,
     UNDEFINED;
