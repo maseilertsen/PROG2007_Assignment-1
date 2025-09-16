@@ -37,7 +37,7 @@ data class GeoPoint(
  */
 data class Work (
     val workingDays: DayOfWeek,
-    val location: Location,
+    val location: Location?,
     val startTime: LocalTime,
     val endTime: LocalTime,
     )
