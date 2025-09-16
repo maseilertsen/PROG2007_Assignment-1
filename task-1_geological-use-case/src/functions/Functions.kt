@@ -8,12 +8,10 @@ import mockMineral
  */
 fun printMainMenu(){
     println("--- Main menu: ---\n" +
-            "1 - Findings menu\n" +
+            "1 - Observation (findings) menu\n" +
             "2 - Location administration\n" +
             "3 - Mineral administration\n" +
-            "4 - List all locations\n" +
-            "5 - List all minerals\n" +
-            "6 - Employee administration\n" +
+            "4 - Employee administration\n" +
             "0 - Shut down application\n" +
             "-------------------------\n")
 }

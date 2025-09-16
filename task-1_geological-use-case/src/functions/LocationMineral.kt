@@ -2,11 +2,9 @@ package functions
 
 import Finds
 import IdentificationStatus
-import Work
 import mockFinds
 import mockLocation
 import mockMineral
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -15,7 +13,8 @@ fun printFindsMenu(){
     println("--Mineral Administration ---\n" +
             "\t1 - List all finds\n" +
             "\t2 - Add find\n" +
-            "\t3 - remove find\n"
+            "\t3 - remove find\n" +
+            "\t0 - return to main menu\n"
     )
 }
 
@@ -32,8 +31,8 @@ fun findsMenu(){
         when (opt) {
             1 -> listAllFinds()
             2 -> addFind()
-           // 3 -> removeFind()
-            0 -> println("System: Exiting Finds administration...\n")
+            3 -> deleteFind()
+            0 -> println("System: Returning to main manu....\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
     } while (opt != 0)
@@ -134,3 +133,20 @@ fun addFind(){
     mockFinds.add(newFind) // adds to list of findings
 }
 
+fun deleteFind(){
+    println("\n--- Remove Find ---")
+    println("Valid Choices: ")
+
+    var index = 1
+    for (finds in mockFinds){
+        println("\t$index - ${finds.location?.name} - ${finds.mineral?.name} - ${finds.observedAt?.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${finds.observedBy?.name?.firstName} - ${finds.status?.displayName} - ${finds.notes}")
+        index++
+    }
+    print("----------------- ID of location to be deleted: ")
+    val choice = readln().toIntOrNull()
+    if (choice != null) {
+        mockFinds.removeAt(choice-1)
+    } else {
+        println("--- Something went wrong, nothing is deleted. ---\n")
+    }
+}

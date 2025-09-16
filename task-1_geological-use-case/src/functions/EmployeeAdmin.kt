@@ -46,7 +46,7 @@ fun employeeAdmin() {
             9 -> sortEmployees()
             10 -> nomadEmployees()
             0 -> println("System: Exiting Employee administration...\n")
-            !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
+            !in 4..10 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
     } while (opt != 0)
 }
