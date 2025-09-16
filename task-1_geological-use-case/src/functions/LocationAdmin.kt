@@ -219,3 +219,26 @@ fun addLocation(found: Location){
     deleteLocation(found.name)
     addLocation(true)
 }
+
+/**
+ * Finds a location based on its name
+ * @param name - the name of the location (city).
+ * @return Location - instance of location that matches name.
+ */
+fun findLocation(name: String?): Location? {
+    var name = name
+    if (name == null) {
+        println("\nSearch for a Location (by name of city): ")
+        print("->")
+        name = readln().trim()
+    }
+
+    val found = mockLocation.firstOrNull { it.name == name }
+    if (found != null) {
+        //println(found) // TODO remove debug print
+        return found
+    } else {
+        println("Location not found.")
+        return null
+    }
+}
