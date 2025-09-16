@@ -20,6 +20,7 @@ fun printEmployeeAdmin(){
             "\t7 - Employee monthly paycheck\n" +
             "\t8 - All monthly paychecks\n" +
             "\t9 - sort employees\n" +
+            "\t10 - check for nomads\n" +
             "\t0 - Return to main menu\n"
     )
 }
@@ -43,6 +44,7 @@ fun employeeAdmin() {
             7 -> monthlyPaycheck(null)
             8 -> allMonthlyPaycheck()
             9 -> sortEmployees()
+            10 -> nomadEmployees()
             0 -> println("System: Exiting Employee administration...\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -164,4 +166,17 @@ fun sortEmployees() {
     val sortedList= mockEmployee.sortedBy{it.name.lastName}
     println("\nSorted employees:")
     sortedList.forEach{printOneEmployee(it.name.firstName)}
+}
+
+/**
+ * Lists all employees that don't hava a location for a given work
+ */
+fun nomadEmployees() {
+    for (employee in mockEmployee){
+       for (work in employee.work){ // prints "location not found"
+           if (work.location == null){
+               println("${employee.name.firstName} ${employee.name.lastName} is missing a location for ${work.workingDays} (time: ${work.startTime}-${work.endTime})")
+           }
+       }
+    }
 }
