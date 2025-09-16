@@ -127,28 +127,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             items = mockLocation
         )
     } // end column
+
 }
-
-
-
-
-data class Location(
-    val name: String,
-    val description: String = "",
-    val coordinates: GeoPoint,
-    val notes: String = ""
-)
-
-data class GeoPoint(
-    val latitude: Double,
-    val longitude: Double
-)
-
-var mockLocation = mutableStateListOf(
-    Location("Cairo", "A bit sandy",GeoPoint(30.0444, 31.2357)),   // Egypt
-    Location("Oslo", "Surrounded by fjords and forests", GeoPoint(59.9139, 10.7522), "Does anyone really live here?"),   // Norway
-)
-
 @Composable
 fun SimpleVerticalList(items: MutableList<Location>) {
 
