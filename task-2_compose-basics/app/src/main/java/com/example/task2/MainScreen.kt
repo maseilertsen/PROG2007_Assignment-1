@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
@@ -26,45 +27,79 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier){
-    Scaffold (
+fun MainScreen(modifier: Modifier = Modifier) {
+    Scaffold(
         modifier = Modifier.fillMaxSize()
-    )
-    { innerPadding -> HomeScreen(modifier = modifier.padding(innerPadding))
-
+    ) { innerPadding ->
+        HomeScreen(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF4779DC))
+                .padding(innerPadding)
+                .padding(horizontal = 20.dp, vertical = 24.dp)
+        )
     }
 }
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    Column(modifier = modifier
-        .fillMaxSize()
-        .background(Color(0xFF4779DC)),
-        verticalArrangement = Arrangement.Center,
+    var textName by remember { mutableStateOf("") }
+    var textDesc by remember { mutableStateOf("") }
+    var textLat by remember { mutableStateOf("") }
+    var textLong by remember { mutableStateOf("") }
+
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Hello there",
+            text = "newLocation()",
             fontSize = 40.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color.White
-        ) // end column
-        Row (
+            color = Color.White,
             modifier = Modifier.padding(20.dp)
         )
-        {
-            var text by remember { mutableStateOf("") }
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text("Name") },
+            value = textName,
+            onValueChange = { textName = it},
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            TextField(
+                modifier = Modifier.weight(1f),
+                placeholder = { Text("Latitude") },
+                value = textLat,
+                onValueChange = { textLat = it },
+            )
+            TextField(
+                modifier = Modifier.weight(1f),
+                placeholder = { Text("Longitude") },
+                value = textLong,
+                onValueChange = { textLong = it },
+            )
+        } // end row
+        Row (
+            modifier = Modifier.fillMaxWidth()
+            ) {
+
 
             TextField(
                 modifier = Modifier,
-                placeholder = {Text("hello")},
-                value = text,
-                onValueChange = { /*TODO*/ },
+                placeholder = {Text("Description")},
+                value = textDesc,
+                onValueChange = { textDesc = it },
             )
             Button(
-                modifier = Modifier,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(5.dp,5.dp),
                 onClick = {/*TODO*/},
-                shape = ButtonDefaults.shape
             ) {
                 Text(
                 text = "Save",
@@ -72,5 +107,5 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 color = Color.LightGray
             ) }
         } // end row
-    }
+    } // end column
 }
