@@ -238,7 +238,7 @@ fun findLocation(name: String?): Location? {
         //println(found) // TODO remove debug print
         return found
     } else {
-        println("Location not found.")
+       // println("Location not found.")
         return null
     }
 }

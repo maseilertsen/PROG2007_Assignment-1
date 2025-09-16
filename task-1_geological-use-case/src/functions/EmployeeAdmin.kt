@@ -173,7 +173,7 @@ fun sortEmployees() {
  */
 fun nomadEmployees() {
     for (employee in mockEmployee){
-       for (work in employee.work){ // prints "location not found"
+       for (work in employee.work){
            if (work.location == null){
                println("${employee.name.firstName} ${employee.name.lastName} is missing a location for ${work.workingDays} (time: ${work.startTime}-${work.endTime})")
            }
