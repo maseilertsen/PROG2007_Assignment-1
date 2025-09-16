@@ -1,6 +1,7 @@
 package com.example.task2
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,12 +18,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -99,7 +104,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             Button(
                 modifier = Modifier.fillMaxWidth()
                     .padding(5.dp,5.dp),
-                onClick = {/*TODO*/},
+                onClick = {
+                            val newLocation = Location(textName, textDesc, GeoPoint(textLat.toDouble(), textLong.toDouble()))
+
+                            mockLocation.add(newLocation)
+
+                },
             ) {
                 Text(
                 text = "Save",
@@ -107,5 +117,53 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 color = Color.LightGray
             ) }
         } // end row
+        Text(text = "Saved Locations:",
+                  fontSize = 20.sp,
+                  fontWeight = FontWeight.SemiBold,
+                  color = Color.White,
+        )
+
+        SimpleVerticalList(
+            items = mockLocation
+        )
     } // end column
+}
+
+
+
+
+data class Location(
+    val name: String,
+    val description: String = "",
+    val coordinates: GeoPoint,
+    val notes: String = ""
+)
+
+data class GeoPoint(
+    val latitude: Double,
+    val longitude: Double
+)
+
+var mockLocation = mutableStateListOf(
+    Location("Cairo", "A bit sandy",GeoPoint(30.0444, 31.2357)),   // Egypt
+    Location("Oslo", "Surrounded by fjords and forests", GeoPoint(59.9139, 10.7522), "Does anyone really live here?"),   // Norway
+)
+
+@Composable
+fun SimpleVerticalList(items: MutableList<Location>) {
+
+    Column {
+        items.forEach { item ->
+            Row (
+                modifier = Modifier.padding(0.dp,10.dp)
+                    .background((Color.LightGray))
+                    
+            ){
+                Text(
+                    fontWeight = FontWeight.SemiBold,
+                    text = "${item.name} ")
+                Text("${item.description} (${item.coordinates.latitude},${item.coordinates.longitude})", modifier = Modifier.padding(8.dp))
+                }
+        }
+    }
 }
