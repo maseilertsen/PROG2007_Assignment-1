@@ -11,17 +11,17 @@ import java.time.DayOfWeek
  */
 fun printEmployeeAdmin(){
     println("--Employee Administration ---\n" +
-            //"\t1 - Add mineral\n" +
-            //"\t2 - Update mineral\n" +
-            //"\t3 - Delete mineral\n" +
-            "\t4 - Sort employees\n" +
-            "\t5 - list all employees\n" +
-            "\t6 - list one employee\n" +
-            "\t7 - Employee monthly paycheck\n" +
-            "\t8 - All monthly paychecks\n" +
-            "\t9 - sort employees\n" +
-            "\t10 - check for nomads\n" +
-            "\t0 - Return to main menu\n"
+            //"\t1 - Add mineral\n" +     // TODO
+            //"\t2 - Update mineral\n" +  // TODO part of issue 15. Will need to come back to this if time.
+            //"\t3 - Delete mineral\n" +  // TODO
+            "\t4  - Sort employees\n" +
+            "\t5  - list all employees\n" +
+            "\t6  - list one employee\n" +
+            "\t7  - Employee monthly paycheck\n" +
+            "\t8  - All monthly paychecks\n" +
+            "\t9  - sort employees\n" +
+            "\t10 - list all nomads\n" +
+            "\t0  - Return to main menu\n"
     )
 }
 /**
@@ -169,7 +169,7 @@ fun sortEmployees() {
 }
 
 /**
- * Lists all employees that don't hava a location for a given work
+ * Lists all employees that don't hava a location for a given work.
  */
 fun nomadEmployees() {
     for (employee in mockEmployee){
