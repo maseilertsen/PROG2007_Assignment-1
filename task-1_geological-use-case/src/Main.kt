@@ -1,7 +1,5 @@
 import functions.employeeAdmin
-import functions.findsMenu
-import functions.listAllLocation
-import functions.listAllMinerals
+import functions.observationMenu
 import functions.locationAdmin
 import functions.printMainMenu
 import functions.mineralAdmin
@@ -10,6 +8,10 @@ import functions.mineralAdmin
 /**
  * Reads user input, and calls functions to perform program function.
  * @see functions.printMainMenu
+ * @see functions.observationMenu
+ * @see functions.locationAdmin
+ * @see functions.mineralAdmin
+ * @see functions.employeeAdmin
  */
 fun main() {
     do {
@@ -18,7 +20,7 @@ fun main() {
         val opt = readln().toIntOrNull() ?: println("\t!!! - Please enter an integer!")
         when (opt) {
             // TODO: Implement functions
-            1 -> findsMenu()
+            1 -> observationMenu()
             2 -> locationAdmin() // add, update and delete.
             3 -> mineralAdmin() // add, update and delete.
             4 -> employeeAdmin()

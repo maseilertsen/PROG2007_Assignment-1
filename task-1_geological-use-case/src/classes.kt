@@ -32,8 +32,6 @@ data class GeoPoint(
  * @see Employee
  * @see Location
  * @see DayOfWeek
- * @see LocalTime
- * @see LocalTime
  */
 data class Work (
     val workingDays: DayOfWeek,
@@ -44,7 +42,8 @@ data class Work (
 
 /**
  * Data of Employees
- * TODO: could I if employeeId already exists with a require?
+ * @see Name
+ * TODO: could I check if employeeId already exists with a require?
  */
 data class Employee (
     val employeeId: Int,
@@ -59,8 +58,7 @@ data class Employee (
 }
 
 /**
- * Name of employee
- * @see Employee
+ * Name of [Employee]
  */
 data class Name(
     val firstName: String,
@@ -73,9 +71,9 @@ data class Name(
  * @see Location
  * @see Mineral
  * @see IdentificationStatus
- * @see Employee
+ * @see Employee]
  */
-data class Finds(
+data class Observation(
     var location: Location?,
     var mineral: Mineral?,
     var status: IdentificationStatus? = IdentificationStatus.UNDEFINED,

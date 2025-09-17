@@ -1,15 +1,17 @@
 package functions
 
-import Finds
+import Observation
 import IdentificationStatus
-import mockFinds
+import mockObservation
 import mockLocation
 import mockMineral
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-
-fun printFindsMenu(){
+/**
+ * Prints user choices in observation menu
+ */
+fun printObservationMenu(){
     println("--Mineral Administration ---\n" +
             "\t1 - List all finds\n" +
             "\t2 - Add find\n" +
@@ -18,10 +20,17 @@ fun printFindsMenu(){
     )
 }
 
-fun findsMenu(){
+/**
+ * The main menu function of Observation
+ * @see printObservationMenu
+ * @see listAllObservations
+ * @see addObservation
+ * @see deleteObservation
+ */
+fun observationMenu(){
     var opt : Int?
     do {
-        printFindsMenu()
+        printObservationMenu()
         print("Choose a valid option: ")
         opt = readln().toIntOrNull()
         if (opt == null) {
@@ -29,9 +38,9 @@ fun findsMenu(){
             continue
         }
         when (opt) {
-            1 -> listAllFinds()
-            2 -> addFind()
-            3 -> deleteFind()
+            1 -> listAllObservations()
+            2 -> addObservation()
+            3 -> deleteObservation()
             0 -> println("System: Returning to main manu....\n")
             !in 1..3 -> println("\t!!! - Not a valid option!\n") // "catch all" solution.
         }
@@ -40,29 +49,38 @@ fun findsMenu(){
 
 
 /**
- * Lists one find
+ * Lists one observation
+ * @param observation - an instance of [Observation]
  */
-fun listOneFind(finds: Finds){
-    println("\tLocation: "+ finds.location?.name)
-    println("\tMineral: " + finds.mineral?.name)
-    println("\tNotes: " + finds.notes)
-    println("\tObservation time: " + finds.observedAt?.format(DateTimeFormatter.ofPattern("HH:mm")).toString()) // TODO should ideally include teh date as well.
-    println("\tObserved by: " + finds.observedBy?.name?.firstName)
-    println("\tStatus: " + finds.status?.displayName)
+fun listOneObservation(observation: Observation){
+    println("\tLocation: "+ observation.location?.name)
+    println("\tMineral: " + observation.mineral?.name)
+    println("\tNotes: " + observation.notes)
+    println("\tObservation time: " + observation.observedAt?.format(DateTimeFormatter.ofPattern("HH:mm")).toString()) // TODO should ideally include teh date as well.
+    println("\tObserved by: " + observation.observedBy?.name?.firstName)
+    println("\tStatus: " + observation.status?.displayName)
     println()
 }
-fun listAllFinds(){
-    for (finds in mockFinds){
-        listOneFind(finds)
+
+/**
+ * Lists all observations
+ * @see listOneObservation
+ */
+fun listAllObservations(){
+    for (finds in mockObservation){
+        listOneObservation(finds)
     }
 }
 /**
- * Adds find of geological data.
+ * Adds observation of geological find
+ * @see findLocation
+ * @see findMineral
+ * @see findEmployee
  */
-fun addFind(){
+fun addObservation(){
     println("\n--- Add Find ---")
     
-    // Find location
+    // Location prompt
     print("Valid locations: ")
     for (location in mockLocation){
         print(location.name + " ")
@@ -70,12 +88,12 @@ fun addFind(){
     println()
     print("What location are you at?: ")
     val location = readln().trim()
-    var foundLocation = findLocation(location)
+    val foundLocation = findLocation(location)
     if (foundLocation == null){
         println("location not found")
     }
 
-    // Mineral
+    // Mineral prompt
     println()
     print("Valid minerals: ")
     for (mineral in mockMineral)
@@ -89,7 +107,7 @@ fun addFind(){
         println("mineral not found")
     }
 
-    // Status
+    // Status prompt
     println()
     print("Valid status: ")
     for (enum in IdentificationStatus.entries){
@@ -100,7 +118,7 @@ fun addFind(){
     print("How sure are you of this information?: ")
     val statusInput = readln().trim()
 
-    // Try to match against the enum names (case-insensitive)
+    //  Match against the enum names (case-insensitive!)
     val validStatus: IdentificationStatus =
         IdentificationStatus.entries.firstOrNull { it.name.equals(statusInput, ignoreCase = true) }
             ?: run {
@@ -108,7 +126,7 @@ fun addFind(){
                 IdentificationStatus.UNDEFINED
             }
 
-    // Notes
+    // Notes prompt
     println()
     print("Add any notes?\n" +
             "->")
@@ -122,7 +140,8 @@ fun addFind(){
         println("employee not found")
     }
 
-    val newFind = Finds(
+    // Add all values to a new Finds
+    val newObservation = Observation (
         location = foundLocation,
         mineral = foundMineral,
         status = validStatus,
@@ -130,22 +149,25 @@ fun addFind(){
         observedAt = LocalTime.now(),
         observedBy = foundEmployee,
     )
-    mockFinds.add(newFind) // adds to list of findings
+    mockObservation.add(newObservation) // adds to list of findings
 }
 
-fun deleteFind(){
+/**
+ * Deletes an observation that the user inputs
+ */
+fun deleteObservation(){
     println("\n--- Remove Find ---")
     println("Valid Choices: ")
 
     var index = 1
-    for (finds in mockFinds){
+    for (finds in mockObservation){
         println("\t$index - ${finds.location?.name} - ${finds.mineral?.name} - ${finds.observedAt?.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${finds.observedBy?.name?.firstName} - ${finds.status?.displayName} - ${finds.notes}")
         index++
     }
     print("----------------- ID of location to be deleted: ")
     val choice = readln().toIntOrNull()
     if (choice != null) {
-        mockFinds.removeAt(choice-1)
+        mockObservation.removeAt(choice-1)
     } else {
         println("--- Something went wrong, nothing is deleted. ---\n")
     }

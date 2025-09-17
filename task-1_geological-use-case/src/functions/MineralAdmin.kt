@@ -26,6 +26,8 @@ fun printMineralAdmin(){
  * @see addMineral
  * @see updateMineral
  * @see deleteMineral
+ * @see listAllMinerals
+ * @see sortMineral
  */
 fun mineralAdmin() {
     var opt : Int?
@@ -51,6 +53,7 @@ fun mineralAdmin() {
 
 /**
  * Adds a mineral using user input
+ * @param replace flag to trigger replacement code block
  */
 fun addMineral(replace: Boolean = false){
     println("\n--- Add Mineral Program ---")
@@ -212,6 +215,7 @@ fun updateMineral(){
 
 /**
  * Deletes a mineral named by user input.
+ * @param replace name of mineral to replace
  * @see listAllMinerals
  */
 fun deleteMineral(replace: String?) {
@@ -241,6 +245,11 @@ fun deleteMineral(replace: String?) {
     }
 }
 
+/**
+ * Replaces mineral by deleting old mineral and adding replacement.
+ * @param found instance of [Mineral]
+ */
+// Should probably use the .copy() and replace by index instead..?
 fun replaceMineral(found: Mineral){
     deleteMineral(found.name)
     addMineral(true)
@@ -248,12 +257,13 @@ fun replaceMineral(found: Mineral){
 
 /**
  * Sorts a list naturally
- * TODO: pretty print
+ * @see sortAlphabetically
  */
 fun <T: Comparable<T>> sortAlphabetically(selector: (Mineral) -> T?){
     val sortedList = mockMineral.sortedBy(selector)
     println("\nSorted list:")
 
+    // TODO: pretty print
     sortedList.forEach { print("\t$it\n")}
     println()
 }
@@ -277,6 +287,11 @@ fun sortMineral(){
     }
 }
 
+/**
+ * Finds mineral based on name of mineral
+ * @param name name of mineral
+ * @return instance of [Mineral]
+ */
 fun findMineral(name: String?): Mineral? {
     var name = name
     if (name == null) {
@@ -287,10 +302,8 @@ fun findMineral(name: String?): Mineral? {
 
     val found = mockMineral.firstOrNull { it.name == name }
     if (found != null) {
-        //println(found) // TODO remove debug print
         return found
     } else {
-        // println("Location not found.")
         return null
     }
 }

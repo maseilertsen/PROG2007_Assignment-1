@@ -25,7 +25,15 @@ fun printEmployeeAdmin(){
     )
 }
 /**
- * Add, update and delete minerals.
+ * Main loop of employee menu
+ * @see printEmployeeAdmin
+ * @see sortMineral
+ * @see listAllEmployees
+ * @see printOneEmployee
+ * @see monthlyPaycheck
+ * @see allMonthlyPaycheck
+ * @see sortEmployees
+ * @see nomadEmployees
  */
 fun employeeAdmin() {
     var opt : Int?
@@ -53,6 +61,7 @@ fun employeeAdmin() {
 
 /**
  * Lists a (1) employee and their data.
+ * @param employee - an instance of [Employee]
  */
 fun printEmployee(employee: Employee) {
     println("ID-${employee.employeeId} -- name: ${employee.name.firstName} ${employee.name.lastName}")
@@ -76,6 +85,7 @@ fun printEmployee(employee: Employee) {
 
 /**
  * Lists all employees in database (list)
+ * @see printEmployee
  */
 fun listAllEmployees() {
     for (employee in mockEmployee){
@@ -85,12 +95,8 @@ fun listAllEmployees() {
 
 /**
  * Search for employee by first name in database (list)
- * @param name pass a name to the function
- * @see Employee
- * @return Instance of Employee or null
- *
- * TODO implement modular function to search for different parameter like:
- * TODO @see sortAlphabetically
+ * @param name first name of employee function
+ * @return Instance of [Employee] or null
  */
 fun findEmployee(name: String?): Employee? {
     var name = name
@@ -103,16 +109,15 @@ fun findEmployee(name: String?): Employee? {
 
     val found = mockEmployee.firstOrNull{it.name.firstName == name}
     if (found != null) {
-        //println("Found Employee: ${found.name.firstName} ${found.name.lastName}") // TODO remove debug print
         return found
      } else {
-         println("Employee not found")
         return null
      }
 }
 
 /**
  * Prints one specific employee and their info
+ * @param employee first name of employee
  * @see findEmployee
  * @see printEmployee
  */
@@ -128,9 +133,11 @@ fun printOneEmployee(employee: String?) {
 /**
  * Calculate and display monthly paycheck of an employee
  * Assumption: There are 4 weeks of work in a month
+ * @param employee an instance of [Employee]
+ * @see findEmployee
  */
 fun monthlyPaycheck(employee: Employee?) {
-    val employee = findEmployee(employee?.name?.firstName)
+    //val employee = findEmployee(employee?.name?.firstName)
 
     if (employee != null) {
         val payByHour = employee.hourlyWage
@@ -161,6 +168,7 @@ fun allMonthlyPaycheck() {
 
 /**
  * Sorts employees by their last name
+ * @see printOneEmployee
  */
 fun sortEmployees() {
     val sortedList= mockEmployee.sortedBy{it.name.lastName}
@@ -169,7 +177,7 @@ fun sortEmployees() {
 }
 
 /**
- * Lists all employees that don't hava a location for a given work.
+ * Lists all employees that don't hava a location for a given work (nomads)
  */
 fun nomadEmployees() {
     for (employee in mockEmployee){

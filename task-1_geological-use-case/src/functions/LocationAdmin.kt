@@ -23,6 +23,7 @@ fun printLocationAdmin(){
  * @see addLocation
  * @see updateLocation
  * @see deleteLocation
+ * @see listAllLocation
  */
 fun locationAdmin() {
     var opt : Int?
@@ -35,7 +36,6 @@ fun locationAdmin() {
             continue
         }
         when (opt) {
-            // TODO: Implement functions
             1 -> addLocation()
             2 -> updateLocation()
             3 -> deleteLocation(null)
@@ -83,6 +83,7 @@ fun addLocation(replace: Boolean = false) {
 
 /**
  * Deletes a location provided by user input (String)
+ * @param replace name of location to be replaced
  * @see listAllLocation
  */
 fun deleteLocation(replace: String?) {
@@ -121,6 +122,7 @@ fun deleteLocation(replace: String?) {
 /**
  * Updates a locations properties based on user input
  * @see listAllLocation
+ * @see addLocation
  */
 fun updateLocation() {
     println("\n--- Update Location Program ---")
@@ -213,9 +215,9 @@ fun updateLocation() {
 
 /**
  * Replaces all attributes of named location.
- * Overloaded function.
+ * @param found an instance of [Location]
  * @see deleteLocation
- * @see addLocation
+ * @see addLocation(
  */
 fun addLocation(found: Location){
     deleteLocation(found.name)
@@ -225,7 +227,7 @@ fun addLocation(found: Location){
 /**
  * Finds a location based on its name
  * @param name - the name of the location (city).
- * @return Location - instance of location that matches name.
+ * @return [Location] - instance of location that matches name.
  */
 fun findLocation(name: String?): Location? {
     var name = name
@@ -237,10 +239,8 @@ fun findLocation(name: String?): Location? {
 
     val found = mockLocation.firstOrNull { it.name == name }
     if (found != null) {
-        //println(found) // TODO remove debug print
         return found
     } else {
-       // println("Location not found.")
         return null
     }
 }
